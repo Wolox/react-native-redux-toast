@@ -17,7 +17,8 @@ export default class Toast extends Component {
     dismissTimeout: null
   };
 
-  componentWillReceiveProps({ message, error, duration, warning }) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { message, error, duration, warning } = nextProps
     if (message) {
       const dismissTimeout = setTimeout(() => {
         this.props.dispatch(toastActions.hide());
@@ -41,15 +42,15 @@ export default class Toast extends Component {
         dismissTimeout
       },
       () => {
-        Animated.timing(this.state.fadeAnimation, { toValue: 1 }).start();
-        Animated.timing(this.state.shadowOpacity, { toValue: 0.5 }).start();
+        Animated.timing(this.state.fadeAnimation, { toValue: 1, useNativeDriver: true }).start();
+        Animated.timing(this.state.shadowOpacity, { toValue: 0.5, useNativeDriver: true }).start();
       }
     );
   }
 
   hide() {
-    Animated.timing(this.state.shadowOpacity, { toValue: 0 }).start();
-    Animated.timing(this.state.fadeAnimation, { toValue: 0 }).start(() => {
+    Animated.timing(this.state.shadowOpacity, { toValue: 0, useNativeDriver: true }).start();
+    Animated.timing(this.state.fadeAnimation, { toValue: 0, useNativeDriver: true }).start(() => {
       this.setState({ present: false, message: null, error: false, warning: false, dismissTimeout: null });
     });
   }
@@ -70,8 +71,10 @@ export default class Toast extends Component {
         style={[
           styles.shadow,
           styles.container,
+          this.props.customToastStyle,
           { opacity: this.state.fadeAnimation, shadowOpacity: this.state.shadowOpacity }
         ]}
+        pointerEvents='none'
       >
         <View style={messageStyles}>
           {this.props.getMessageComponent(this.state.message, {
@@ -96,6 +99,7 @@ Toast.defaultProps = {
 
 Toast.propTypes = {
   containerStyle: ViewPropTypes.style,
+  customToastStyle: ViewPropTypes.style,
   message: PropTypes.string,
   messageStyle: Text.propTypes.style, // eslint-disable-line react/no-unused-prop-types
   error: PropTypes.bool,

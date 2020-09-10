@@ -1,6 +1,6 @@
 {
   "name": "react-native-redux-toast",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Cross platform implementation of Android's toast component. Easy to customize and integrate with redux. 100% written in JS.",
   "main": "lib/index.js",
   "scripts": {
@@ -8,9 +8,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "build": "babel index.js -d lib && babel src -d lib/src",
-    "prepublish": "npm run build",
-    "lint-diff": "git diff --name-only --cached --relative | grep \\\\.js$ | xargs eslint",
-    "precommit": "npm run lint-diff"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -31,8 +29,7 @@
   },
   "homepage": "https://github.com/Wolox/react-native-redux-toast",
   "dependencies": {
-    "prop-types": "^15.5.10",
-    "seamless-immutable": "^7.1.2"
+    "prop-types": "^15.5.10"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -52,7 +49,7 @@
     "prettier": "^1.1.0",
     "prettier-eslint": "^5.1.0",
     "react": "^15.5.4",
-    "react-native": "^0.43.3",
+    "react-native": "^0.60.4",
     "react-redux": "^5.0.4"
   },
   "peerDependencies": {
